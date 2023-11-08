@@ -65,7 +65,7 @@ function AddPatientInfo({ navigation }) {
 
     // sending post request to server
     axios
-      .post("http://127.0.0.1:3000/patients", newPatient)
+      .post("http://10.0.2.2:3000/patients", newPatient)
       .then((response) => {
         console.log("Patient added successfully: ", response.data);
         alert("Patient added successfully");
