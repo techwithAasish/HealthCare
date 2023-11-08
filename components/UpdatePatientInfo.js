@@ -34,7 +34,7 @@ const UpdatePatientInfo = () => {
             style={styles.input}
             placeholder="Enter your first name"
             value={firstName}
-            // onChangeText={text => setFirstName(text)}
+            onChangeText={(text) => setFirstName(text)}
           />
         </View>
 
@@ -44,7 +44,7 @@ const UpdatePatientInfo = () => {
             style={styles.input}
             placeholder="Enter your last name"
             value={address}
-            // onChangeText={text => setLastName(text)}
+            onChangeText={(text) => setLastName(text)}
           />
         </View>
         <View style={styles.firstName}>

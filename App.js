@@ -7,23 +7,5 @@ import ViewPatientInfo from "./components/ViewPatientInfo";
 import UpdatePatientInfo from "./components/UpdatePatientInfo";
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <View style={styles.container}>
-        {/* <AddPatientInfo /> */}
-        {/* <AddPatientTest /> */}
-        {/* <ViewPatientInfo /> */}
-        <UpdatePatientInfo />
-      </View>
-    </NavigationContainer>
-  );
+  return <AppNavigator />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
