@@ -56,6 +56,7 @@ function AddPatientInfo({ navigation }) {
     const newPatient = {
       first_name,
       last_name,
+      value,
       address,
       date_of_birth,
       department,
@@ -65,7 +66,8 @@ function AddPatientInfo({ navigation }) {
 
     // sending post request to server
     axios
-      .post("http://10.0.2.2:3000/patients", newPatient)
+      // .post("http://10.24.32.80:3000/patients", newPatient)
+      .post("http://192.168.2.95:3000/patients", newPatient)
       .then((response) => {
         console.log("Patient added successfully: ", response.data);
         alert("Patient added successfully");
@@ -136,7 +138,7 @@ function AddPatientInfo({ navigation }) {
             <Text style={styles.label}>Email Address</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter your last name"
+              placeholder="Enter your email address"
               value={email}
               onChangeText={(text) => setEmail(text)}
             />
@@ -155,7 +157,7 @@ function AddPatientInfo({ navigation }) {
             <Text style={styles.label}>Date of Birth</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter your last name"
+              placeholder="Enter your date of birth"
               value={date_of_birth}
               onChangeText={(text) => setDob(text)}
             />

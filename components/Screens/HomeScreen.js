@@ -7,6 +7,11 @@ function HomeScreen({ navigation }) {
     navigation.navigate("AddPatientInfo");
   };
 
+  //action button for all patients
+  const handleListPatient = () => {
+    navigation.navigate("ListAllPatients");
+  };
+
   // action button for adding patients
   const handleViewPatient = () => {
     navigation.navigate("ViewPatientInfo");
@@ -19,7 +24,7 @@ function HomeScreen({ navigation }) {
 
   // action button for adding patients
   const handleViewPatientTest = () => {
-    navigation.navigate("ViewPatientTest");
+    navigation.navigate("Login");
   };
 
   return (
@@ -48,11 +53,18 @@ function HomeScreen({ navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText} onPress={handleViewPatientTest}>
-          Update Patient Test
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.firstSection}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText} onPress={handleViewPatientTest}>
+            Update Patient Test
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText} onPress={handleListPatient}>
+            All Patient Info
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
