@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import {
   View,
@@ -10,23 +11,72 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
-const AddPatientTest = () => {
-  const [firstName, setFirstName] = useState("");
-  const [address, setAddress] = useState("");
-  const [value, setValue] = useState(null);
+const AddPatientTest = ({ navigation }) => {
+  const [date, setDate] = useState("");
+  const [category, setCategory] = useState(null);
+  const [type, setType] = useState("");
+  const [nurse_name, setNurse] = useState("");
+  const [diastolic, setDiastolic] = useState("");
+  const [systolic, setSystolic] = useState("");
+  const [condition_critical, setCritical] = useState("");
+  const [patientId, setPatientId] = useState("");
   const [isFocus, setIsFocus] = useState(false);
-
-  const category = [
-    { label: "Blood Pressure" },
-    { label: "Emergency", value: "1" },
-    { label: "Cardiology", value: "2" },
-    { label: "Neurology", value: "3" },
+  const category1 = [
+    { label: "Blood Pressure", value: "Blood Pressure" },
+    { label: "Emergency", value: "Emergency" },
+    { label: "Cardiology", value: "Cardiology" },
+    { label: "Neurology", value: "Neurology" },
   ];
 
   const critical = [
-    { label: "Yes", value: "1" },
-    { label: "No", value: "2" },
+    { label: "Yes", value: "Yes" },
+    { label: "No", value: "No" },
   ];
+
+  // action button for add patient test
+  const handleAddButton = () => {
+    if (
+      !patientId ||
+      !date ||
+      !nurse_name ||
+      !type ||
+      !category ||
+      !diastolic ||
+      !systolic ||
+      !condition_critical
+    ) {
+      Alert.alert("Validation Error", "Please fill in all fields.");
+      return;
+    }
+
+    // create object for patients
+    const newPatientTest = {
+      patientId,
+      date,
+      nurse_name,
+      type,
+      category,
+      diastolic,
+      systolic,
+      condition_critical,
+    };
+
+    // sending post request to server
+    axios
+      .post(
+        "http://192.168.2.95:3000/patients/6556c7eda567f532fda959e5/tests",
+        newPatientTest
+      )
+      .then((response) => {
+        console.log("Patient test added successfully: ", response.data);
+        alert("Patient test added successfully");
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+        console.error("Error adding patient:", error);
+        // Handle the error, show an alert, or other error handling logic
+      });
+  };
 
   return (
     <ScrollView>
@@ -34,30 +84,22 @@ const AddPatientTest = () => {
         <View style={styles.header}>
           <Text style={styles.headerText}>Add Test for a patient</Text>
         </View>
-
         <View style={styles.firstName}>
-          <Text style={styles.label}>First Name</Text>
+          <Text style={styles.label}>Patient ID:</Text>
           <TextInput
+            editable={true}
+            selectTextOnFocus={true}
             style={styles.input}
-            value={firstName}
-            // onChangeText={text => setFirstName(text)}
-          />
-        </View>
-
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Last Name</Text>
-          <TextInput
-            style={styles.input}
-            value={address}
-            // onChangeText={text => setLastName(text)}
+            value={patientId}
+            onChangeText={(text) => setPatientId(text)}
           />
         </View>
         <View style={styles.firstName}>
           <Text style={styles.label}>Date</Text>
           <TextInput
             style={styles.input}
-            value={address}
-            // onChangeText={text => setLastName(text)}
+            value={date}
+            onChangeText={(text) => setDate(text)}
           />
         </View>
         <View style={styles.firstName}>
@@ -68,15 +110,15 @@ const AddPatientTest = () => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={category}
+            data={category1}
             maxHeight={300}
             labelField="label"
             valueField="value"
-            value={value}
+            value={category}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {
-              setValue(item.value);
+              setCategory(item.value);
               setIsFocus(false);
             }}
           />
@@ -86,33 +128,25 @@ const AddPatientTest = () => {
           <Text style={[styles.label, styles.phone]}>Type</Text>
           <TextInput
             style={styles.input}
-            // value={firstName}
-            // onChangeText={text => setFirstName(text)}
+            value={type}
+            onChangeText={(text) => setType(text)}
           />
         </View>
         <View style={styles.firstName}>
-          <Text style={[styles.label, styles.phone]}>Doctor Name</Text>
+          <Text style={[styles.label, styles.phone]}>Nurse Name</Text>
           <TextInput
             style={styles.input}
-            // value={firstName}
-            // onChangeText={text => setFirstName(text)}
+            value={nurse_name}
+            onChangeText={(text) => setNurse(text)}
           />
         </View>
 
         <View style={styles.firstName}>
-          <Text style={styles.label}>patient_id</Text>
-          <TextInput
-            style={styles.input}
-            // value={address}
-            // onChangeText={text => setLastName(text)}
-          />
-        </View>
-        <View style={styles.firstName}>
           <Text style={styles.label}>Diastolic</Text>
           <TextInput
             style={styles.input}
-            // value={firstName}
-            // onChangeText={text => setFirstName(text)}
+            value={diastolic}
+            onChangeText={(text) => setDiastolic(text)}
           />
         </View>
 
@@ -120,8 +154,8 @@ const AddPatientTest = () => {
           <Text style={styles.label}>Systolic</Text>
           <TextInput
             style={styles.input}
-            // value={address}
-            // onChangeText={text => setLastName(text)}
+            value={systolic}
+            onChangeText={(text) => setSystolic(text)}
           />
         </View>
         <View style={styles.firstName}>
@@ -136,11 +170,11 @@ const AddPatientTest = () => {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            value={value}
+            value={condition_critical}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {
-              setValue(item.value);
+              setCritical(item.value);
               setIsFocus(false);
             }}
           />
@@ -149,7 +183,12 @@ const AddPatientTest = () => {
         {/* Buttons */}
         <View style={styles.buttons}>
           <View style={styles.buttonStyle}>
-            <Button title="Edit" style={styles.button} onPress color="tomato" />
+            <Button
+              title="Add"
+              style={styles.button}
+              onPress={handleAddButton}
+              color="tomato"
+            />
           </View>
 
           <View style={styles.buttonStyle}>
