@@ -1,171 +1,119 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
+  FlatList,
   TextInput,
   Button,
   StyleSheet,
   ScrollView,
 } from "react-native";
+import axios from "axios";
 import { Dropdown } from "react-native-element-dropdown";
 
 const ViewPatientTest = () => {
-  const [firstName, setFirstName] = useState("");
-  const [address, setAddress] = useState("");
-  const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+  const renderItem = ({ item }) => (
+    <View style={styles.row}>
+      <Text style={styles.cell}>{item.patientId}</Text>
+      <Text style={styles.cell}>{item.date}</Text>
+      <Text style={styles.cell}>{item.nurse_name}</Text>
+      <Text style={styles.cell}>{item.diastolic}</Text>
+      <Text style={styles.cell}>{item.systolic}</Text>
+      <Text style={styles.cell}>{item.condition_critical}</Text>
+    </View>
+  );
 
-  const genders = [
-    { label: "Select Gender" },
-    { label: "Male", value: "1" },
-    { label: "Female", value: "2" },
-  ];
+  const [patientTest, setPatientTest] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://192.168.2.95:3000/patients/65595b710981aaa0c732aafa/tests")
+      .then((response) => {
+        if (response) {
+          const data = response.data;
+          setPatientTest(data);
+          console.log("The id is", data);
+        } else {
+          console.log("No data");
+        }
+      })
+      .catch((error) => {
+        console.error("Error listing patient:", error);
+        // Handle the error, show an alert, or other error handling logic
+      });
+  }, []);
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}> Patient Information</Text>
-        </View>
-
-        <View style={styles.firstName}>
-          <Text style={styles.label}>First Name:</Text>
-          <Text style={styles.labelSecond}>Pam</Text>
-        </View>
-
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Last Name:</Text>
-          <Text style={styles.labelSecond}>Macy</Text>
-        </View>
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Date:</Text>
-          <Text style={styles.labelSecond}>12/12/2021</Text>
-        </View>
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Category:</Text>
-          <Text style={styles.labelSecond}>Blood Pressure</Text>
-        </View>
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Type:</Text>
-          <Text style={styles.labelSecond}>Test</Text>
-        </View>
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Doctor Name:</Text>
-          <Text style={styles.labelSecond}>Emillia Johnson</Text>
-        </View>
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Patient_id:</Text>
-          <Text style={styles.labelSecond}>13</Text>
-        </View>
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Diastolic:</Text>
-          <Text style={styles.labelSecond}>80</Text>
-        </View>
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Systolic:</Text>
-          <Text style={styles.labelSecond}>120</Text>
-        </View>
-        <View style={styles.firstName}>
-          <Text style={styles.label}>Condition Critical:</Text>
-          <Text style={styles.labelSecond}>No</Text>
-        </View>
-
-        {/* Buttons */}
-        <View style={styles.buttons}>
-          <View style={styles.buttonStyle}>
-            <Button title="Edit" style={styles.button} onPress color="tomato" />
-          </View>
-
-          <View style={styles.buttonStyle}>
-            <Button
-              title="Delete"
-              style={styles.button}
-              onPress
-              color="tomato"
-            />
-          </View>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.headerTopBar}>
+        <Text style={styles.headerTopBarText}>Users</Text>
       </View>
-    </ScrollView>
+      <View style={styles.header}>
+        <Text style={styles.heading}>Patient Id</Text>
+        <Text style={styles.heading}>Date</Text>
+        <Text style={styles.heading}>Nurse Name</Text>
+        <Text style={styles.heading}>Diastolic</Text>
+        <Text style={styles.heading}>Systolic</Text>
+        <Text style={styles.heading}>Critical Condition</Text>
+      </View>
+      <FlatList
+        data={patientTest}
+        keyExtractor={(item) => item._id.toString()}
+        renderItem={renderItem}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    justifyContent: "center",
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingVertical: 30,
+    paddingHorizontal: 30,
+  },
+  headerTopBar: {
+    backgroundColor: "#6AB7E2",
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 5,
+    elevation: 2,
+    marginBottom: 15,
+  },
+  headerTopBarText: {
+    color: "#fff",
+    // fontFamily: FontFamily.poppinsMedium,
+    fontSize: 16,
   },
   header: {
-    backgroundColor: "blue", // Background color of the header
-    height: 60, // Height of the header
-    justifyContent: "space-around", // Center text vertically
-    alignItems: "center", // Center text horizontally
-    marginBottom: 20,
     flexDirection: "row",
-  },
-  headerText: {
-    color: "white", // Text color
-    fontSize: 20, // Text font size
-    fontWeight: "bold", // Text font weight
-  },
-  firstName: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  dropdown: {
-    height: 40,
-    width: 200,
-    borderColor: "gray",
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 5,
-    marginBottom: 9,
-    marginTop: 4,
-  },
-  selectedTextStyle: {
-    fontSize: 14,
-  },
-  buttons: {
-    marginTop: 20,
+    justifyContent: "space-between",
+    padding: 10,
     width: 350,
+  },
+
+  heading: {
+    flex: 1,
+    // fontFamily: FontFamily.poppinsMedium,
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  row: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+    marginVertical: 4,
+    marginHorizontal: 3,
+    elevation: 1,
+    borderRadius: 3,
+    borderColor: "#fff",
+    padding: 13,
+    backgroundColor: "#fff",
   },
-  buttonStyle: {
-    paddingLeft: 20,
-    width: 150, // this way it works
-  },
-  button: {
-    height: 20,
-  },
-
-  inputSearchStyle: {
-    height: 14,
-    fontSize: 14,
-  },
-
-  label: {
-    fontSize: 18,
-    marginBottom: 5,
-    width: 110,
-  },
-  labelSecond: {
-    fontSize: 18,
-    marginBottom: 5,
-    width: 200,
-  },
-  phone: {
-    marginTop: 10,
-  },
-  input: {
-    height: 40,
-    width: 200,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 15,
-    paddingLeft: 10,
+  cell: {
+    fontSize: 12,
+    // fontFamily: FontFamily.poppinsRegular,
+    textAlign: "left",
+    flex: 1,
   },
 });
 

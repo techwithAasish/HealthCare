@@ -17,8 +17,8 @@ function ViewPatientInfo({ navigation }) {
 
   const genders = [
     { label: "Select Gender" },
-    { label: "Male", value: "1" },
-    { label: "Female", value: "2" },
+    { label: "Male", value: "Male" },
+    { label: "Female", value: "Female" },
   ];
 
   return (

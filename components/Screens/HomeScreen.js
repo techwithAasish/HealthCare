@@ -24,7 +24,7 @@ function HomeScreen({ navigation }) {
 
   // action button for adding patients
   const handleViewPatientTest = () => {
-    navigation.navigate("Login");
+    navigation.navigate("ViewPatientTest");
   };
 
   return (
