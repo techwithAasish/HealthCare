@@ -93,6 +93,7 @@ const AddPatientTest = ({ navigation }) => {
           <TextInput
             editable={true}
             selectTextOnFocus={true}
+            placeholder="Enter patient id"
             style={styles.input}
             value={patientId}
             onChangeText={(text) => setPatientId(text)}
@@ -102,6 +103,7 @@ const AddPatientTest = ({ navigation }) => {
           <Text style={styles.label}>Date</Text>
           <TextInput
             style={styles.input}
+            placeholder="Enter date"
             value={date}
             onChangeText={(text) => setDate(text)}
           />
@@ -132,6 +134,7 @@ const AddPatientTest = ({ navigation }) => {
           <Text style={[styles.label, styles.phone]}>Type</Text>
           <TextInput
             style={styles.input}
+            placeholder="Enter type of test"
             value={type}
             onChangeText={(text) => setType(text)}
           />
@@ -140,6 +143,7 @@ const AddPatientTest = ({ navigation }) => {
           <Text style={[styles.label, styles.phone]}>Nurse Name</Text>
           <TextInput
             style={styles.input}
+            placeholder="Enter name of the Nurse"
             value={nurse_name}
             onChangeText={(text) => setNurse(text)}
           />
@@ -149,6 +153,7 @@ const AddPatientTest = ({ navigation }) => {
           <Text style={styles.label}>Diastolic</Text>
           <TextInput
             style={styles.input}
+            placeholder="Enter Diastolic"
             value={diastolic}
             onChangeText={(text) => setDiastolic(text)}
           />
@@ -158,6 +163,7 @@ const AddPatientTest = ({ navigation }) => {
           <Text style={styles.label}>Systolic</Text>
           <TextInput
             style={styles.input}
+            placeholder="Enter Systolic"
             value={systolic}
             onChangeText={(text) => setSystolic(text)}
           />
