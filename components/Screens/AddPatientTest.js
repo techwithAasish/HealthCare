@@ -64,9 +64,13 @@ const AddPatientTest = ({ navigation }) => {
     // sending post request to server
     axios
       .post(
-        "http://192.168.2.95:3000/patients/6556c7eda567f532fda959e5/tests",
+        "https://patient-backend-krc3.onrender.com/patients/6556c7eda567f532fda959e5/tests",
         newPatientTest
       )
+      // .post(
+      //   "http:http://192.168.2.95:3000/patients/6556c7eda567f532fda959e5/tests",
+      //   newPatientTest
+      // )
       .then((response) => {
         console.log("Patient test added successfully: ", response.data);
         alert("Patient test added successfully");

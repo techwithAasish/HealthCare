@@ -66,8 +66,8 @@ function AddPatientInfo({ navigation }) {
 
     // sending post request to server
     axios
-      // .post("http://10.24.32.80:3000/patients", newPatient)
-      .post("http://192.168.2.95:3000/patients", newPatient)
+      // .post("http://192.168.2.95:3000/patients", newPatient)
+      .post("https://patient-backend-krc3.onrender.com/patients", newPatient)
       .then((response) => {
         console.log("Patient added successfully: ", response.data);
         alert("Patient added successfully");
@@ -192,7 +192,11 @@ function AddPatientInfo({ navigation }) {
           </View>
 
           {/* Buttons */}
-          <Button title="Save" onPress={handleSaveButton} />
+          <Button
+            testID="MyButton.Button.ClickMe"
+            title="Save"
+            onPress={handleSaveButton}
+          />
         </View>
       </ScrollView>
     </>

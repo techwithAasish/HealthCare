@@ -2,13 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FlatList, Text, View, StyleSheet } from "react-native";
 import axios from "axios";
 
-// const data = [
-//   { id: 1, name: "Ahsan", username: "ahsann", age: 17 },
-//   { id: 2, name: "Afsdfa", username: "afa", age: 17 },
-//   { id: 3, name: "cdsd", username: "sdfs", age: 17 },
-//   { id: 4, name: "dsada", username: "ddsa", age: 17 },
-// ];
-
 function ListAllPatients() {
   const renderItem = ({ item }) => (
     <View style={styles.row}>
@@ -25,8 +18,8 @@ function ListAllPatients() {
 
   useEffect(() => {
     axios
-      // .get(" http://192.168.2.95:3000/patients/6556c535a567f532fda959df")
-      .get(" http://192.168.2.95:3000/patients")
+      // .get(" http://192.168.2.95:3000/patients")
+      .get(" https://patient-backend-krc3.onrender.com/patients")
       .then((response) => {
         if (response) {
           const data = response.data;
