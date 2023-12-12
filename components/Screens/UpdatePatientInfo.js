@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   Button,
+  Alert,
   StyleSheet,
   ScrollView,
 } from "react-native";
@@ -70,6 +71,7 @@ const UpdatePatientInfo = ({ navigation }) => {
       )
       .then((response) => {
         console.log("Patient updated successfully: ", response.data);
+        alert("Patient updated successfully");
         navigation.navigate("Home");
       })
       .catch((error) => {
@@ -140,7 +142,7 @@ const UpdatePatientInfo = ({ navigation }) => {
           <Text style={styles.label}>Email Address</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter your last name"
+            placeholder="Enter your email Address"
             value={email}
             onChangeText={(text) => setEmail(text)}
           />
@@ -159,7 +161,7 @@ const UpdatePatientInfo = ({ navigation }) => {
           <Text style={styles.label}>Date of Birth</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter your last name"
+            placeholder="Enter your Date of Birth"
             value={date_of_birth}
             onChangeText={(text) => setDob(text)}
           />
