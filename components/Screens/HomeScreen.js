@@ -27,6 +27,10 @@ function HomeScreen({ navigation }) {
     navigation.navigate("ViewPatientTest");
   };
 
+  const handleUpdatePatientTest = () => {
+    navigation.navigate("UpdatePatientTest");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.firstSection}>
@@ -55,8 +59,8 @@ function HomeScreen({ navigation }) {
       </View>
       <View style={styles.firstSection}>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText} onPress={handleViewPatientTest}>
-            Update Patient Test
+          <Text style={styles.buttonText} onPress={handleUpdatePatientTest}>
+            Update Patient Info
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   View,
   Text,
@@ -9,9 +10,16 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
-const UpdatePatientInfo = () => {
-  const [firstName, setFirstName] = useState("");
+const UpdatePatientInfo = ({ navigation }) => {
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [date_of_birth, setDob] = useState("");
+  const [department, setDepartment] = useState("");
+  const [doctor, setDoctorName] = useState("");
+  const [patient_id, setIdPatient] = useState("");
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -20,6 +28,55 @@ const UpdatePatientInfo = () => {
     { label: "Male", value: "1" },
     { label: "Female", value: "2" },
   ];
+
+  const handleUpdate = () => {
+    if (
+      !first_name ||
+      !last_name ||
+      !address ||
+      !phone ||
+      !email ||
+      !date_of_birth ||
+      !department ||
+      !doctor ||
+      !patient_id
+    ) {
+      Alert.alert("Validation Error", "Please fill in all fields.");
+      return;
+    }
+    if (phone.length != 10) {
+      Alert.alert(
+        "Validation Error",
+        "Please enter a valid 10-digit phone number."
+      );
+    }
+
+    // create object for patients
+    const newPatient = {
+      first_name,
+      last_name,
+      address,
+      date_of_birth,
+      department,
+      doctor,
+      patient_id,
+    };
+
+    // sending post request to server
+    axios
+      .put(
+        "https://patient-backend-krc3.onrender.com/patients/65727d8c86e08f73ec4ccffb",
+        newPatient
+      )
+      .then((response) => {
+        console.log("Patient updated successfully: ", response.data);
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+        console.error("Error adding patient:", error);
+        // Handle the error, show an alert, or other error handling logic
+      });
+  };
 
   return (
     <ScrollView>
@@ -33,7 +90,7 @@ const UpdatePatientInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter your first name"
-            value={firstName}
+            value={first_name}
             onChangeText={(text) => setFirstName(text)}
           />
         </View>
@@ -43,7 +100,7 @@ const UpdatePatientInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter your last name"
-            value={address}
+            value={last_name}
             onChangeText={(text) => setLastName(text)}
           />
         </View>
@@ -74,8 +131,8 @@ const UpdatePatientInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter your phone number"
-            // value={firstName}
-            // onChangeText={text => setFirstName(text)}
+            value={phone}
+            onChangeText={(text) => setPhone(text)}
           />
         </View>
 
@@ -84,8 +141,8 @@ const UpdatePatientInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter your last name"
-            // value={address}
-            // onChangeText={text => setLastName(text)}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
         </View>
         <View style={styles.firstName}>
@@ -93,8 +150,8 @@ const UpdatePatientInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter your address"
-            // value={firstName}
-            // onChangeText={text => setFirstName(text)}
+            value={address}
+            onChangeText={(text) => setAddress(text)}
           />
         </View>
 
@@ -103,8 +160,8 @@ const UpdatePatientInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter your last name"
-            // value={address}
-            // onChangeText={text => setLastName(text)}
+            value={date_of_birth}
+            onChangeText={(text) => setDob(text)}
           />
         </View>
         <View style={styles.firstName}>
@@ -112,8 +169,8 @@ const UpdatePatientInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter the department"
-            // value={firstName}
-            // onChangeText={text => setFirstName(text)}
+            value={department}
+            onChangeText={(text) => setDepartment(text)}
           />
         </View>
 
@@ -122,8 +179,8 @@ const UpdatePatientInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter the name of doctor"
-            // value={address}
-            // onChangeText={text => setLastName(text)}
+            value={doctor}
+            onChangeText={(text) => setDoctorName(text)}
           />
         </View>
         <View style={styles.firstName}>
@@ -131,8 +188,8 @@ const UpdatePatientInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter patient id"
-            // value={address}
-            // onChangeText={text => setLastName(text)}
+            value={patient_id}
+            onChangeText={(text) => setIdPatient(text)}
           />
         </View>
 
@@ -142,7 +199,7 @@ const UpdatePatientInfo = () => {
             <Button
               title="Update"
               style={styles.button}
-              onPress
+              onPress={handleUpdate}
               color="tomato"
             />
           </View>

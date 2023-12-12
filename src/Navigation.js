@@ -11,6 +11,7 @@ import Login from "../components/Authentication/Login";
 import WelcomeScreen from "../components/WelcomeScreen";
 import SignUp from "../components/Authentication/SignUp";
 import ListAllPatients from "../components/Screens/ListAllPatients";
+import UpdatePatientInfo from "../components/Screens/UpdatePatientInfo";
 
 function AppNavigator() {
   const Stack = createStackNavigator();
@@ -27,6 +28,7 @@ function AppNavigator() {
         <Stack.Screen name="ViewPatientInfo" component={ViewPatientInfo} />
         <Stack.Screen name="AddPatientTest" component={AddPatientTest} />
         <Stack.Screen name="ViewPatientTest" component={ViewPatientTest} />
+        <Stack.Screen name="UpdatePatientTest" component={UpdatePatientInfo} />
       </Stack.Navigator>
     </NavigationContainer>
   );
